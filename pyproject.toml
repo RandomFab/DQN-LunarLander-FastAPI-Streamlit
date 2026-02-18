@@ -1,0 +1,19 @@
+[project]
+name = "astrodynamics"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.129.0",
+    "gymnasium[box2d]>=1.2.3",
+    "ipykernel==6.29.5",
+    "setuptools==69.5.1",
+    "stable-baselines3[extra]>=2.7.1",
+    "streamlit>=1.54.0",
+    "tensorboard>=2.20.0",
+    "torch>=2.10.0",
+    "torch-tb-profiler>=0.4.3",
+    "torchvision>=0.25.0",
+    "tqdm>=4.67.3",
+]
