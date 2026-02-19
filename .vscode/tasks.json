@@ -1,0 +1,78 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start Streamlit",
+            "type": "shell",
+            "command": "uv run streamlit run src/app/app.py",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "close": false
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^.*$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "You can now view your Streamlit app",
+                    "endsPattern": "Network URL: http://"
+                }
+            }
+        },
+        {
+            "label": "Start API",
+            "type": "shell",
+            "command": "uv run uvicorn src.api.main:api --reload",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "close": false
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^.*$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Uvicorn running on",
+                    "endsPattern": "http://127.0.0.1:8000"
+                }
+            }
+        },
+        {
+            "label": "Start TensorBoard",
+            "type": "shell",
+            "command": "uv run python -m tensorboard.main --logdir ${input:logDir}",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "close": false
+            },
+            "problemMatcher": [
+                {
+                    "pattern": {
+                        "regexp": "^.*$"
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "Serving TensorBoard",
+                        "endsPattern": "http://localhost"
+                    }
+                }
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "logDir",
+            "type": "promptString",
+            "description": "Chemin du dossier de logs",
+            "default": "logs/dqn_LunarLander_v1"
+        }
+    ]
+}
