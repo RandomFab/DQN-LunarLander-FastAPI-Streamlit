@@ -7,7 +7,6 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.10+-EE4C2C.svg?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Gymnasium](https://img.shields.io/badge/Gymnasium-1.2+-purple.svg)](https://gymnasium.farama.org/)
 
-> **Dépôt GitHub recommandé :** [`DQN-LunarLander-FastAPI-Streamlit`](https://github.com/RandomFab/DQN-LunarLander-FastAPI-Streamlit)
 
 **Entraînement et déploiement d'un agent DQN (Deep Q-Network) capable d'atterrir de manière autonome sur la surface lunaire, dans l'environnement `LunarLander-v3` de Gymnasium.**
 
@@ -252,7 +251,7 @@ L'application comporte deux pages accessibles via la barre latérale :
 
 ```bash
 # Cloner le dépôt
-git clone <url-du-repo>
+git clone https://github.com/RandomFab/DQN-LunarLander-FastAPI-Streamlit.git
 cd AstroDynamics
 
 # Installer les dépendances
