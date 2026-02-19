@@ -4,7 +4,7 @@
         {
             "label": "Start Streamlit",
             "type": "shell",
-            "command": "uv run streamlit run src/app/interface.py",
+            "command": "uv run streamlit run src/app/app.py",
             "isBackground": true,
             "presentation": {
                 "reveal": "always",

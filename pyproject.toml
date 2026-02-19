@@ -8,6 +8,7 @@ dependencies = [
     "fastapi[standard]>=0.129.0",
     "gymnasium[box2d]>=1.2.3",
     "ipykernel==6.29.5",
+    "plotly>=6.5.2",
     "setuptools==69.5.1",
     "stable-baselines3[extra]>=2.7.1",
     "streamlit>=1.54.0",

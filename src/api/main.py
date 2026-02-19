@@ -1,9 +1,12 @@
+import numpy as np
 from fastapi import FastAPI, HTTPException, Request
 from src.model.model_service import load_model, predict_action
 from src.api.schemas import Observation, PredictionResponse
 from contextlib import asynccontextmanager
 from config.logger import logger
-
+from typing import List
+from typing import List
+import numpy as np
 
 @asynccontextmanager
 async def lifespan(api: FastAPI):
@@ -107,6 +110,53 @@ def predict(request: Request, observation: Observation):
 
         # 3. Return the response using the schema
         return PredictionResponse(action=action)
+
+    except RuntimeError as re:
+        # Specific business logic error
+        logger.error(f"❌ Logic error during prediction: {re}")
+        raise HTTPException(status_code=500, detail=str(re))
+    except Exception as e:
+        # General unhandled error
+        logger.error(f"❌ Unexpected prediction error: {e}")
+        raise HTTPException(
+            status_code=500, detail="An unexpected error occurred during prediction."
+        )
+
+@api.post("/predict_batch")
+def predict_batch(request: Request, observations: List[Observation]):
+    """
+    Predict a batch of actions to take based on an environment observation vector.
+
+    Args:
+        request (Request): The request object used to access the model injected into the app state.
+        observation (Observation): A Pydantic model containing the 8-value state vector.
+
+    Returns:
+        PredictionResponse: A Pydantic model containing the predicted action (0, 1, 2, or 3).
+
+    Raises:
+        HTTPException: If the model is not loaded (503) or if prediction fails.
+    """
+    # 1. Access the model from the application state using the helper
+    model = _get_model(request)
+    if not model:
+        logger.error("❌ Prediction failed: Model is not loaded in api state")
+        raise HTTPException(
+            status_code=503,
+            detail="Model is currently not loaded. Please try again later.",
+        )
+
+    try:
+        # OPTIMISATION : On transforme tout en un seul tableau numpy (Batch)
+        # observation.state est une liste de 8 floats
+        batch_states = np.array([obs.state for obs in observations], dtype=np.float32)
+
+        # Stable Baselines 3 accepte les batchs nativement
+        # actions sera un tableau numpy d'actions
+        actions, _ = model.predict(batch_states, deterministic=True)
+
+        # On convertit en liste d'entiers standard pour JSON
+        return {"actions": actions.tolist()}
 
     except RuntimeError as re:
         # Specific business logic error
